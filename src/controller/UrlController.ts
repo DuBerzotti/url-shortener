@@ -15,13 +15,14 @@ export class URLController {
 			response.json(url)
 			return
         }
-        
+		
         //criar o hash da URL
 		const hash = shortId.generate()
-        const shortURL = `${config.API_URL}/${hash}`
+		const shortURL = `${config.API_URL}/${hash}`
+		const numberAccess = 0
 
         //Salvar URL no banco
-		const newURL = await URLModel.create({ hash, shortURL, originURL })
+		const newURL = await URLModel.create({ hash, shortURL, originURL, numberAccess})
         response.json(newURL) //Envia a nova URL.
 	}
 
@@ -33,6 +34,13 @@ export class URLController {
 		const url = await URLModel.findOne({ hash })
 
 		if (url) {
+			// Atualiza o número de acesso na variavel numberAcess
+			await URLModel.updateOne
+			(
+				{_id : url._id}, 
+				{numberAccess : url.numberAccess + 1}
+			);
+			//redireciona para URL original
 			response.redirect(url.originURL)
 			return
 		}
