@@ -1,4 +1,2 @@
 npm i typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint
 npm i nodemon express cors
-
-3:59
