@@ -1,8 +1,9 @@
-  
-import { Request, Response } from 'express'
+import { Request, Response, Router } from 'express'
 import shortId from 'shortid'
 import { config } from '../config/Constants'
 import { URLModel } from '../database/model/URL'
+
+
 
 export class URLController {
 	public async shorten(req: Request, response: Response): Promise<void> {
@@ -14,7 +15,7 @@ export class URLController {
 		if (url) {
 			response.json(url)
 			return
-        }
+		}
 		
         //criar o hash da URL
 		const hash = shortId.generate()

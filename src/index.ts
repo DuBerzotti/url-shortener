@@ -1,7 +1,11 @@
 import express, {Request, Response} from 'express'
+import { MongoConnection } from './database/MongoConnection'
+
 import { URLController } from './controller/URLController'
 import { UserController } from './controller/UserController'
-import { MongoConnection } from './database/MongoConnection'
+
+const authMiddleware = require('./middlewares/auth')
+const router = express.Router()
 
 const api = express()
 api.use(express.json())
@@ -12,8 +16,9 @@ database.connect()
 const urlController = new URLController()
 const userController = new UserController()
 
-api.post('/shorten', urlController.shorten)
-api.post('/register', userController.newUser)
+api.post('/shorten' , authMiddleware, urlController.shorten)
+api.post('/register', authMiddleware, userController.newUser)
+api.post('/authenticate', userController.AutenticateUser)
 
 api.get('/:hash', urlController.redirect)
 
