@@ -1,8 +1,8 @@
 import express, {Request, Response} from 'express'
 import { MongoConnection } from './database/MongoConnection'
 
-import { URLController } from './controller/URLController'
-import { UserController } from './controller/UserController'
+import { URLController } from './app/controller/URLController'
+import { UserController } from './app/controller/UserController'
 
 const authMiddleware = require('./middlewares/auth')
 const router = express.Router()

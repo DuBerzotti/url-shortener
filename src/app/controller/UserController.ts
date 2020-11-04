@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { UserModel } from '../database/model/User'
-import PasswordHash from "../config/utils/PasswordHash"
-import  authConfig  from '../config/auth.json'
+import { UserModel } from '../model/User'
+import PasswordHash from "../../config/utils/PasswordHash"
+import  authConfig  from '../../config/auth.json'
 
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"

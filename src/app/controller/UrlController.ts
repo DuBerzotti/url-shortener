@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express'
 import shortId from 'shortid'
-import { config } from '../config/Constants'
-import { URLModel } from '../database/model/URL'
+import { config } from '../../config/Constants'
+import { URLModel } from '../model/URL'
 
 
 

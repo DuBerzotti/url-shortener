@@ -1,6 +1,6 @@
 import {NextFunction, request, Request, Response} from 'express'
 import jwt from "jsonwebtoken"
-import  authConfig  from '../config/auth.json'
+import  authConfig  from '../../config/auth.json'
 
 module.exports = (req: Request, res: Response, next: NextFunction) => {
 
