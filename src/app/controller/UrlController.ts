@@ -3,6 +3,7 @@ import shortId from 'shortid'
 import { config } from '../../config/Constants'
 import { URLModel } from '../model/URL'
 import { AccessModel } from '../model/Access'
+import TodayDate from '../../config/utils/Date'
 
 
 
@@ -47,34 +48,44 @@ export class URLController {
 			//Salvar Historico de acesso por dia e hora
 			const IdUrl = url._id
 
-			const access = await AccessModel.findOne({ IdUrl })
+			//Chama a função com data completa
+			var AccessDay = await TodayDate.GetDate()
 
+			//Chama a função somente pegando a hora
+			var NowHour = await TodayDate.GetHour()
+
+			//Verifica se tem algum dado criado com hora e data no ato do acesso
+			const access = await AccessModel.findOne({ IdUrl, Hour : NowHour, AccessDay: AccessDay})
+
+			//Se tiver entrará nesse if e atualizara o numero de acesso
 			if (access) 
 			{
 				await AccessModel.updateOne
 				(
-					{_id : access._id}, 
+					{_id : access._id,}, 
 					{NumberAccess : access.NumberAccess + 1}
 				);
-			
+
 				//redireciona para URL original
 				response.redirect(url.originURL)
 				return
 			}
 
+			//Se não encontrar no If anterior criará um novo dado
+
+			//Chama a hora
+			var Hour = await TodayDate.GetHour()
+
+			//Pega a descrição da url
 			const AccessDescription  = url.description
 
-			const now = new Date
-
-			const AccessDay = now.getDay() + "/" + now.getMonth() + "/" + now.getFullYear()
-
-			const Hour = now.getHours() + ":" + now.getMinutes()
-
+			//Salva o numero de acesso
 			const NumberAccess = 1
-	
+
 			//Salvar Historico no banco
 			const newAccess = await AccessModel.create({AccessDescription, IdUrl, AccessDay, Hour, NumberAccess})
 			
+			//redireciona para URL original
 			response.redirect(url.originURL)
 			return
 		}

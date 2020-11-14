@@ -12,7 +12,7 @@ export class Access extends Typegoose {
     AccessDay: string
     
     @prop({ required: true })
-    Hour: string
+    Hour: number
     
     @prop({ required: true })
 	NumberAccess: number
